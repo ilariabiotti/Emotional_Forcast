@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Emotional Forecast</title>
 
   <style>
-    html, body {
+
+    html,
+    body {
       margin: 0;
       width: 100%;
       height: 100%;
@@ -15,16 +19,17 @@
     }
 
     body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
       font-family: sans-serif;
     }
+
+    /* MAIN SKY */
 
     .sky {
       position: relative;
       width: 100%;
       height: 100%;
+      overflow: hidden;
+
       background:
         radial-gradient(
           ellipse at 50% 100%,
@@ -32,13 +37,17 @@
           #0b1424 45%,
           #050812 100%
         );
-      overflow: hidden;
     }
+
+
+    /* PERSONAL AURORA */
 
     .aurora {
       position: absolute;
+
       width: 120%;
       height: 70%;
+
       left: -10%;
       top: 15%;
 
@@ -61,167 +70,402 @@
 
       filter: blur(35px);
 
-      animation: moveAurora 20s ease-in-out infinite alternate;
+      animation: moveAurora 20s ease-in-out infinite;
     }
-      
-     .aurora::after {
-       content: "";
-       position: absolute;
-       inset: 0;
-       
-       background: var(--mood-color, transparent);
-       
-       opacity: 0.45;
-       mix-blend-mode: screen;
-       
-       transition: background 2s ease, opacity 2s ease;
-     }
-      
-      
-@keyframes moveAurora {
-  0% {
-    transform: translate(-5%, 0) scale(1);
-  }
 
-  50% {
-    transform: translate(3%, -3%) scale(1.06);
-  }
 
-  100% {
-    transform: translate(5%, 2%) scale(1.1);
-  }
-}
+    /* THE USER'S PERSONAL COLOUR */
+
+    .aurora::after {
+      content: "";
+
+      position: absolute;
+      inset: 0;
+
+      background:
+        radial-gradient(
+          ellipse at 50% 50%,
+          var(--mood-color, transparent),
+          transparent 55%
+        );
+
+      opacity: 0.55;
+
+      mix-blend-mode: screen;
+
+      transition:
+        background 2s ease,
+        opacity 2s ease;
+    }
+
+
+    /* AURORA MOVEMENT */
+
+    @keyframes moveAurora {
+
+      0% {
+        transform:
+          translate(-5%, 0)
+          scale(1);
+      }
+
+      50% {
+        transform:
+          translate(3%, -3%)
+          scale(1.06);
+      }
+
+      100% {
+        transform:
+          translate(5%, 2%)
+          scale(1.1);
+      }
+
+    }
+
+
+    /* TITLE */
 
     .title {
       position: absolute;
+
       top: 30px;
       left: 30px;
 
-      color: rgba(255,255,255,0.8);
+      z-index: 5;
+
+      color: rgba(255, 255, 255, 0.85);
+
       font-size: 14px;
+
       letter-spacing: 0.15em;
+
       text-transform: uppercase;
     }
 
+
+    .title h1 {
+      margin: 0;
+
+      font-size: 44px;
+
+      line-height: 1.05;
+
+      font-weight: 600;
+
+      letter-spacing: 0.08em;
+    }
+
+
+    .title p {
+      margin-top: 150px;
+
+      max-width: 650px;
+
+      font-size: 16px;
+
+      line-height: 1.5;
+
+      letter-spacing: 0.18em;
+    }
+
+
+    /* COMING SOON */
+
+    .coming-soon {
+      position: absolute;
+
+      top: 20px;
+      right: 30px;
+
+      z-index: 5;
+
+      color: rgba(255, 255, 255, 0.7);
+
+      font-size: 12px;
+
+      letter-spacing: 0.08em;
+    }
+
+
+    /* OLD WEBSITE */
+
+    .old-website {
+      position: absolute;
+
+      top: 50%;
+      left: 30px;
+
+      z-index: 10;
+
+      color: rgba(255, 255, 255, 0.7);
+
+      font-size: 12px;
+
+      letter-spacing: 0.08em;
+
+      text-decoration: none;
+    }
+
+    .old-website:hover {
+      color: white;
+    }
+
+
+    /* PERSONAL MOOD */
+
     .mood {
       position: absolute;
+
       left: 50%;
       bottom: 30px;
+
       transform: translateX(-50%);
-  
-      text-align: center;
-      color: rgba(255,255,255,0.8);
-      font-size: 12px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+
       z-index: 10;
+
+      width: 90%;
+
+      text-align: center;
+
+      color: rgba(255, 255, 255, 0.8);
+
+      font-size: 12px;
+
+      letter-spacing: 0.12em;
+
+      text-transform: uppercase;
     }
+
+
+    .mood p {
+      margin: 0;
+    }
+
 
     .mood input {
       width: 55px;
       height: 55px;
+
       margin-top: 15px;
+
       padding: 0;
+
       border: none;
+
       border-radius: 50%;
+
       background: transparent;
+
       cursor: pointer;
     }
+
 
     .mood input::-webkit-color-swatch-wrapper {
       padding: 0;
     }
 
+
     .mood input::-webkit-color-swatch {
       border: none;
+
       border-radius: 50%;
     }
 
+
     #moodMessage {
       margin-top: 12px;
+
       opacity: 0;
+
       transition: opacity 1s ease;
+    }
+
+
+    /* MOBILE */
+
+    @media (max-width: 600px) {
+
+      .title {
+        top: 35px;
+        left: 30px;
+      }
+
+      .title h1 {
+        font-size: 40px;
+      }
+
+      .title p {
+        margin-top: 140px;
+
+        max-width: 330px;
+
+        font-size: 14px;
+      }
+
+      .coming-soon {
+        top: 20px;
+        right: 20px;
+
+        font-size: 10px;
+      }
+
+      .old-website {
+        left: 30px;
+        top: 50%;
+      }
+
+      .mood {
+        bottom: 40px;
+
+        font-size: 12px;
+      }
+
     }
 
   </style>
 </head>
 
+
 <body>
 
   <main class="sky">
 
+
+    <!-- AURORA -->
+
     <div class="aurora"></div>
 
+
+    <!-- TITLE -->
+
+    <div class="title">
+
+      <h1>
+        Emotional<br>
+        Forecast
+      </h1>
+
+      <p>
+        An artistic research<br>
+        atmospheric map of collective feelings
+      </p>
+
+    </div>
+
+
+    <!-- COMING SOON -->
+
+    <div class="coming-soon">
+
+      <p>
+        Ilaria Biotti - website coming soon.
+      </p>
+
+    </div>
+
+
+    <!-- OLD WEBSITE -->
+
+    <a
+      class="old-website"
+      href="https://ilariabiotti.github.io/"
+    >
+      Old website →
+    </a>
+
+
+    <!-- PERSONAL MOOD -->
+
     <div class="mood">
-      <p>What colour do you feel today?</p>
+
+      <p>
+        What colour do your emotions feel today?
+      </p>
 
       <input
         type="color"
         id="moodColor"
         value="#78d8c8"
-        aria-label="Choose your mood"
+        aria-label="Choose your emotional weather colour"
       >
 
-      <p id="moodMessage"></p>
-    </div>
-    
-    <div class="title">
-      <br><br><br>
-      
-      <h1>Emotional Forecast</h1>
-      
-      <br><br><br>
-      
-      <p>An artistic research atmospheric map of collective feelings</p>
+      <p id="moodMessage">
+        Your weather has been recorded.
+      </p>
+
     </div>
 
-    <div class="coming-soon">
-      <p>Ilaria Biotti - website coming soon.</p>
-          
-      <br><br><br>
-      
-    </div>
-
-    <a class="old-website" href="https://ilariabiotti.github.io/">
-       Old website →
-    </a>
 
   </main>
-  
-    <script>
-      const moodColor = document.getElementById("moodColor");
-      const moodMessage = document.getElementById("moodMessage");
-      const aurora = document.querySelector(".aurora");
 
-  moodColor.addEventListener("input", function () {
-    const color = this.value;
 
-    aurora.style.setProperty("--mood-color", color);
+  <!-- PERSONAL AURORA SCRIPT -->
 
-    moodMessage.textContent = "Your weather has been recorded.";
-    moodMessage.style.opacity = "1";
+  <script>
 
-    localStorage.setItem("emotionalForecastMood", color);
-  });
+    const moodColor =
+      document.getElementById("moodColor");
 
-  const savedMood = localStorage.getItem("emotionalForecastMood");
+    const moodMessage =
+      document.getElementById("moodMessage");
 
-  if (savedMood) {
-    moodColor.value = savedMood;
-    aurora.style.setProperty("--mood-color", savedMood);
-  }
-</script>
-    moodMessage.textContent = "Your mood has been recorded.";
-    moodMessage.style.opacity = "1";
+    const aurora =
+      document.querySelector(".aurora");
 
-    localStorage.setItem("emotionalForecastMood", color);
-  });
 
-  const savedMood = localStorage.getItem("emotionalForecastMood");
+    /*
+      When the user chooses a colour,
+      it is added to the existing aurora.
+      The original aurora is NOT replaced.
+    */
 
-  if (savedMood) {
-    moodColor.value = savedMood;
-  }
-</script>
+    moodColor.addEventListener("input", function () {
+
+      const color = this.value;
+
+      aurora.style.setProperty(
+        "--mood-color",
+        color
+      );
+
+      moodMessage.style.opacity = "1";
+
+      localStorage.setItem(
+        "emotionalForecastMood",
+        color
+      );
+
+    });
+
+
+    /*
+      If the user has already chosen
+      a colour on this device,
+      restore their personal atmosphere.
+    */
+
+    const savedMood =
+      localStorage.getItem(
+        "emotionalForecastMood"
+      );
+
+
+    if (savedMood) {
+
+      moodColor.value = savedMood;
+
+      aurora.style.setProperty(
+        "--mood-color",
+        savedMood
+      );
+
+      moodMessage.style.opacity = "1";
+
+    }
+
+  </script>
+
 </body>
+
 </html>
