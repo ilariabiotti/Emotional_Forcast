@@ -61,18 +61,22 @@
 
       filter: blur(35px);
 
-      animation: moveAurora 12s ease-in-out infinite alternate;
+      animation: moveAurora 20s ease-in-out infinite alternate;
     }
 
-    @keyframes moveAurora {
-      from {
-        transform: translateX(-5%) scale(1);
-      }
+@keyframes moveAurora {
+  0% {
+    transform: translate(-5%, 0) scale(1);
+  }
 
-      to {
-        transform: translateX(5%) scale(1.1);
-      }
-    }
+  50% {
+    transform: translate(3%, -3%) scale(1.06);
+  }
+
+  100% {
+    transform: translate(5%, 2%) scale(1.1);
+  }
+}
 
     .title {
       position: absolute;
@@ -100,7 +104,7 @@
       
       <br><br><br>
       
-      <p>An artistic research project and atmospheric map of collective feelings</p>
+      <p>An artistic research atmospheric map of collective feelings</p>
     </div>
 
     <div class="coming-soon">
