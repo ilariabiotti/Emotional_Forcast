@@ -86,20 +86,13 @@
       position: absolute;
       inset: 0;
 
-      background:
-        radial-gradient(
-          ellipse at 50% 50%,
-          var(--mood-color, transparent),
-          transparent 55%
-        );
+      background: var(--mood-gradient, transparent);
 
       opacity: 0.55;
 
       mix-blend-mode: screen;
 
-      transition:
-        background 2s ease,
-        opacity 2s ease;
+      transition: background 2s ease;
     }
 
 
@@ -418,51 +411,94 @@
       document.querySelector(".aurora");
 
 
-    /*
-      When the user chooses a colour,
-      it is added to the existing aurora.
-      The original aurora is NOT replaced.
-    */
+  /*
+    Retrieve previously chosen colours.
+  */
 
-    moodColor.addEventListener("input", function () {
+    let moodColors =
+      JSON.parse(
+        localStorage.getItem("emotionalForecastMoods") || "[]"
+      );
+
+
+  /*
+    Create the atmospheric gradient
+    from all colours chosen by the user.
+  */
+
+    function updateAurora() {
+
+      const gradients = moodColors.map(function(color, index) {
+
+        const positions = [
+          "30% 50%",
+          "50% 40%",
+          "70% 55%",
+          "40% 65%",
+          "60% 60%",
+          "25% 40%",
+          "75% 45%",
+          "50% 65%"
+        ];
+
+        const position =
+          positions[index % positions.length];
+
+        return `
+          radial-gradient(
+            ellipse at ${position},
+            ${color}99,
+            transparent 50%
+          )
+      `  ;
+
+      });
+
+
+      aurora.style.setProperty(
+        "--mood-gradient",
+        gradients.join(",")
+      );
+
+    }
+
+
+  /*
+    When the user chooses a colour,
+    ADD it to the existing atmosphere.
+  */
+
+    moodColor.addEventListener("input", function() {
 
       const color = this.value;
 
-      aurora.style.setProperty(
-        "--mood-color",
-        color
-      );
 
-      moodMessage.style.opacity = "1";
+      moodColors.push(color);
+
 
       localStorage.setItem(
-        "emotionalForecastMood",
-        color
+        "emotionalForecastMoods",
+        JSON.stringify(moodColors)
       );
+
+
+      updateAurora();
+
+
+      moodMessage.style.opacity = "1";
 
     });
 
 
-    /*
-      If the user has already chosen
-      a colour on this device,
-      restore their personal atmosphere.
-    */
+  /*
+    Restore the user's accumulated
+    personal atmosphere.
+  */
 
-    const savedMood =
-      localStorage.getItem(
-        "emotionalForecastMood"
-      );
+    updateAurora();
 
 
-    if (savedMood) {
-
-      moodColor.value = savedMood;
-
-      aurora.style.setProperty(
-        "--mood-color",
-        savedMood
-      );
+    if (moodColors.length > 0) {
 
       moodMessage.style.opacity = "1";
 
