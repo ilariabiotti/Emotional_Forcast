@@ -63,7 +63,21 @@
 
       animation: moveAurora 20s ease-in-out infinite alternate;
     }
-
+      
+     .aurora::after {
+       content: "";
+       position: absolute;
+       inset: 0;
+       
+       background: var(--mood-color, transparent);
+       
+       opacity: 0.45;
+       mix-blend-mode: screen;
+       
+       transition: background 2s ease, opacity 2s ease;
+     }
+      
+      
 @keyframes moveAurora {
   0% {
     transform: translate(-5%, 0) scale(1);
@@ -173,33 +187,30 @@
     </a>
 
   </main>
+  
+    <script>
+      const moodColor = document.getElementById("moodColor");
+      const moodMessage = document.getElementById("moodMessage");
+      const aurora = document.querySelector(".aurora");
 
-  <script>
-    const moodColor = document.getElementById("moodColor");
-    const moodMessage = document.getElementById("moodMessage");
-    const aurora = document.querySelector(".aurora");
+  moodColor.addEventListener("input", function () {
+    const color = this.value;
 
-    moodColor.addEventListener("input", function () {
-      const color = this.value;
+    aurora.style.setProperty("--mood-color", color);
 
-    aurora.style.background = `
-      radial-gradient(
-        ellipse at 30% 50%,
-        ${color}99,
-        transparent 45%
-      ),
-      radial-gradient(
-        ellipse at 55% 45%,
-        ${color}66,
-        transparent 45%
-      ),
-      radial-gradient(
-        ellipse at 75% 55%,
-        ${color}55,
-        transparent 45%
-      )
-    `;
+    moodMessage.textContent = "Your weather has been recorded.";
+    moodMessage.style.opacity = "1";
 
+    localStorage.setItem("emotionalForecastMood", color);
+  });
+
+  const savedMood = localStorage.getItem("emotionalForecastMood");
+
+  if (savedMood) {
+    moodColor.value = savedMood;
+    aurora.style.setProperty("--mood-color", savedMood);
+  }
+</script>
     moodMessage.textContent = "Your mood has been recorded.";
     moodMessage.style.opacity = "1";
 
