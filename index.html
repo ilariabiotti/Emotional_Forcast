@@ -177,7 +177,44 @@
 
       letter-spacing: 0.18em;
     }
+    
+    /* VIEW SWITCH */
 
+    .view-switch {
+      position: absolute;
+      top: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 20;
+
+      color: rgba(255, 255, 255, 0.7);
+
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .view-switch button {
+      background: none;
+      border: none;
+      padding: 0 8px;
+
+      color: rgba(255, 255, 255, 0.5);
+
+      font: inherit;
+      letter-spacing: inherit;
+      text-transform: inherit;
+
+      cursor: pointer;
+    }
+
+    .view-switch button.active {
+      color: white;
+    }
+
+    .view-switch button:hover {
+      color: white;
+    }
 
     /* COMING SOON */
 
@@ -345,7 +382,21 @@
 
     <div class="aurora"></div>
 
+    <!-- VIEW SWITCH -->
 
+    <div class="view-switch">
+
+      <button id="personalButton" class="active">
+        Personal
+      </button>
+
+      <span>·</span>
+
+      <button id="collectiveButton">
+        Collective
+      </button>
+
+    </div>
     <!-- TITLE -->
 
     <div class="title">
